@@ -2,6 +2,13 @@
 
 Instantly translate selected text directly on any webpage with automatic inline replacement.
 
+## Demo
+
+
+https://github.com/user-attachments/assets/8e7c5de7-5914-491d-a747-1b64488ecab1
+
+
+
 ## Features
 
 - **Instant Translation**: Select any text on a webpage and it automatically translates
