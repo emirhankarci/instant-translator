@@ -1,0 +1,38 @@
+# Chrome Extension - Inline Translator
+# .gitignore
+
+# Icon files (add actual icons later)
+icons/*.png
+!icons/.gitkeep
+
+# Development files
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Distribution
+dist/
+build/
+*.zip
+
+# Node modules (if you add build tools later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local

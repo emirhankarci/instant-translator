@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inline Translator Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌍 Inline Translator</h1>
+      <p class="subtitle">Translate text instantly on any page</p>
+    </header>
+
+    <main>
+      <div class="settings-section">
+        <label for="targetLanguage">
+          <span class="label-text">Target Language</span>
+          <select id="targetLanguage" class="input-field">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="pt">Portuguese</option>
+            <option value="ru">Russian</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="zh">Chinese (Simplified)</option>
+            <option value="ar">Arabic</option>
+            <option value="hi">Hindi</option>
+            <option value="tr">Turkish</option>
+            <option value="nl">Dutch</option>
+            <option value="pl">Polish</option>
+            <option value="sv">Swedish</option>
+            <option value="da">Danish</option>
+            <option value="no">Norwegian</option>
+            <option value="fi">Finnish</option>
+            <option value="cs">Czech</option>
+            <option value="ro">Romanian</option>
+            <option value="th">Thai</option>
+            <option value="vi">Vietnamese</option>
+            <option value="id">Indonesian</option>
+            <option value="he">Hebrew</option>
+            <option value="uk">Ukrainian</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="settings-section">
+        <label for="minCharacters">
+          <span class="label-text">Minimum Characters</span>
+          <span class="label-desc">Only translate selections with at least this many characters</span>
+          <input type="number" id="minCharacters" class="input-field" min="1" max="50" value="3">
+        </label>
+      </div>
+
+      <div class="info-section">
+        <h3>How to use:</h3>
+        <ol>
+          <li>Select any text on a webpage</li>
+          <li>It will automatically translate to your target language</li>
+          <li>Click the translated text to see the original</li>
+          <li>Double-click to permanently remove the translation</li>
+        </ol>
+      </div>
+
+      <div class="button-container">
+        <button id="saveBtn" class="btn btn-primary">Save Settings</button>
+      </div>
+
+      <div id="statusMessage" class="status-message"></div>
+    </main>
+
+    <footer>
+      <p>Version 1.0.0</p>
+      <p class="api-info">Using MyMemory Translation API</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
