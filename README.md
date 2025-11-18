@@ -1,4 +1,4 @@
-# Inline Translator Chrome Extension
+# Instant Translator Chrome Extension
 
 Instantly translate selected text directly on any webpage with automatic inline replacement.
 
