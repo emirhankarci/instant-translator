@@ -14,18 +14,30 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Translate text using MyMemory API
+// Translate text using Google Translate (primary) with MyMemory fallback
 async function translateText(text, targetLang) {
-  try {
-    // Detect source language automatically (use 'auto' or specific language)
-    const sourceLang = 'auto';
+  // Try Google Translate first
+  let result = await translateWithGoogle(text, targetLang);
 
-    // Build API URL
+  // If Google fails, try MyMemory as fallback
+  if (!result.success) {
+    console.log('Google Translate failed, trying MyMemory...');
+    result = await translateWithMyMemory(text, targetLang);
+  }
+
+  return result;
+}
+
+// Translate using MyMemory API
+async function translateWithMyMemory(text, targetLang) {
+  try {
+    const sourceLang = 'auto';
     const url = new URL(MYMEMORY_API);
     url.searchParams.append('q', text);
     url.searchParams.append('langpair', `${sourceLang}|${targetLang}`);
 
-    // Make API request
+    console.log('MyMemory API request:', url.toString());
+
     const response = await fetch(url.toString());
 
     if (!response.ok) {
@@ -33,8 +45,8 @@ async function translateText(text, targetLang) {
     }
 
     const data = await response.json();
+    console.log('MyMemory API response:', data);
 
-    // Check if translation was successful
     if (data.responseStatus === 200 && data.responseData?.translatedText) {
       return {
         success: true,
@@ -42,10 +54,10 @@ async function translateText(text, targetLang) {
         detectedLanguage: data.responseData.detectedLanguage || null
       };
     } else {
-      throw new Error('Translation failed or returned empty result');
+      throw new Error(`MyMemory error: ${data.responseDetails || 'Unknown error'}`);
     }
   } catch (error) {
-    console.error('Translation error:', error);
+    console.error('MyMemory translation error:', error);
     return {
       success: false,
       error: error.message
@@ -53,19 +65,36 @@ async function translateText(text, targetLang) {
   }
 }
 
-// Alternative: Google Translate (unofficial endpoint - use with caution)
+// Google Translate (unofficial endpoint - primary translation method)
 async function translateWithGoogle(text, targetLang) {
   try {
     const sourceLang = 'auto';
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+    console.log('Google Translate request:', url);
 
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Google API failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Google Translate response:', data);
+
+    // Google Translate returns an array structure
     if (data && data[0] && data[0][0] && data[0][0][0]) {
+      // Combine all translation segments
+      let translatedText = '';
+      for (let i = 0; i < data[0].length; i++) {
+        if (data[0][i][0]) {
+          translatedText += data[0][i][0];
+        }
+      }
+
       return {
         success: true,
-        translatedText: data[0][0][0]
+        translatedText: translatedText.trim()
       };
     } else {
       throw new Error('Invalid response from Google Translate');

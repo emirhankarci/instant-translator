@@ -8,6 +8,7 @@
     "activeTab"
   ],
   "host_permissions": [
+    "https://translate.googleapis.com/*",
     "https://api.mymemory.translated.net/*"
   ],
   "background": {
